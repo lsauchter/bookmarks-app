@@ -7,7 +7,7 @@ import Nav from './Nav/Nav';
 import config from './config';
 import './App.css';
 
-const bookmarks = [
+  // const bookmarks = [
   // {
   //   id: 0,
   //   title: 'Google',
@@ -29,7 +29,7 @@ const bookmarks = [
   //   rating: '4',
   //   desc: 'brings together the world\'s largest community of developers.'
   // }
-];
+  // ];
 
 class App extends Component {
   state = {
@@ -47,6 +47,14 @@ class App extends Component {
   addBookmark = bookmark => {
     this.setState({
       bookmarks: [ ...this.state.bookmarks, bookmark ],
+    })
+  }
+
+  deleteBookmark = bookmarkId => {
+    const newBookmarks = this.state.bookmarks.filter(bm =>
+      bm.id !== bookmarkId);
+    this.setState({
+      bookmarks: newBookmarks
     })
   }
 
@@ -72,6 +80,7 @@ class App extends Component {
     const contextValue = {
       bookmarks: this.state.bookmarks,
       addBookmark: this.addBookmark,
+      deleteBookmark: this.deleteBookmark,
     }
     return (
       <main className='App'>
