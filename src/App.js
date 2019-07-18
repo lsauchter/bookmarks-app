@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom';
 import AddBookmark from './AddBookmark/AddBookmark';
 import BookmarkList from './BookmarkList/BookmarkList';
+import BookmarksContext from './BookmarksContext';
 import Nav from './Nav/Nav';
 import config from './config';
 import './App.css';
@@ -32,7 +33,7 @@ const bookmarks = [
 
 class App extends Component {
   state = {
-    bookmarks,
+    bookmarks: [],
     error: null,
   };
 
@@ -68,29 +69,27 @@ class App extends Component {
   }
 
   render() {
-    const { bookmarks } = this.state
+    const contextValue = {
+      bookmarks: this.state.bookmarks,
+      addBookmark: this.addBookmark,
+    }
     return (
       <main className='App'>
         <h1>Bookmarks!</h1>
+        <BookmarksContext.Provider value={contextValue}>
         <Nav />
         <div className='content' aria-live='polite'>
           <Route
             path='/add-bookmark'
-            render={({ history }) => {
-              return <AddBookmark
-                onAddBookmark={this.addBookmark}
-                onClickCancel={() => history.push('/')}
-              />
-            }}
+            component={AddBookmark}
           />
           <Route
             exact
             path='/'
-            render={({ history }) => {
-              return <BookmarkList bookmarks={bookmarks} />
-            }}
+            component={BookmarkList}
           />
         </div>
+        </BookmarksContext.Provider>
       </main>
     );
   }
