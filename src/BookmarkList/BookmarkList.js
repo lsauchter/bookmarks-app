@@ -29,7 +29,7 @@ BookmarkList.propTypes = {
   bookmarks: PropTypes.arrayOf(PropTypes.shape({
     title: PropTypes.string.isRequired,
     url: PropTypes.string.isRequired,
-    rating: PropTypes.number,
+    rating: PropTypes.string,
     description: PropTypes.string
   }))
 }
